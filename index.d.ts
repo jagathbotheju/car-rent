@@ -22,3 +22,13 @@ export type Filters = {
   limit: number;
   model: string;
 };
+
+export type FilterOptions = {
+  title: string;
+  value: string;
+};
+
+export type Filter = {
+  title: string;
+  options: FilterOptions[];
+};

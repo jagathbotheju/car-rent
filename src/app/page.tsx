@@ -1,10 +1,11 @@
 import Image from "next/image";
 import Hero from "./components/Hero";
 import SearchBar from "./components/SearchBar";
-import Filter from "./components/Filter";
 import { fetchCars } from "./actions/fetchCars";
-import { Car, Filters } from "../..";
+import { Car, FilterOptions, Filters } from "../..";
 import CarCard from "./components/CarCard";
+import SearchFilters from "./components/SearchFilters";
+import ShowMore from "./components/ShowMore";
 
 interface Props {
   searchParams: Filters;
@@ -21,6 +22,8 @@ export default async function Home({ searchParams }: Props) {
 
   const isCarsEmpty = !Array.isArray(allCars) || allCars.length < 1 || !allCars;
 
+  const setSearchOptions = (option: FilterOptions) => {};
+
   return (
     <main className="overflow-hidden flex flex-col">
       <Hero />
@@ -29,12 +32,9 @@ export default async function Home({ searchParams }: Props) {
         <h1 className="font-semibold text-2xl">Car Catalogue</h1>
         <p className="text-gray-500">Explore the cars you might like</p>
 
-        <div className="flex mt-5 justify-between w-full h-fit">
+        <div className="flex flex-col md:flex-row mt-5 justify-between w-full h-fit">
           <SearchBar />
-          <div className="flex gap-x-5">
-            <Filter title="fuel" />
-            <Filter title="year" />
-          </div>
+          <SearchFilters />
         </div>
 
         {/* cars list */}
@@ -45,9 +45,13 @@ export default async function Home({ searchParams }: Props) {
                 <CarCard car={car} key={index} />
               ))}
             </div>
+            <ShowMore
+              pageNumber={(searchParams.limit || 10) / 10}
+              isNext={(searchParams.limit || 10) > allCars.length}
+            />
           </section>
         ) : (
-          <div className="text-2xl font-bold p-10 text-center bg-red-200">
+          <div className="text-2xl font-bold p-10 text-center bg-red-200 my-5 rounded-md">
             <h2>No Cars Found</h2>
           </div>
         )}

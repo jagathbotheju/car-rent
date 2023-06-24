@@ -7,7 +7,7 @@ export async function fetchCars(filters: Filters) {
   };
 
   const response = await fetch(
-    `https://cars-by-api-ninjas.p.rapidapi.com/v1/cars?model=${filters.manufacturer}&year=${filters.year}&model=${filters.model}&limit=${filters.limit}&fuel_type=${filters.fuel}`,
+    `https://cars-by-api-ninjas.p.rapidapi.com/v1/cars?manufacturer=${filters.manufacturer}&year=${filters.year}&model=${filters.model}&limit=${filters.limit}&fuel_type=${filters.fuel}`,
     { headers }
   );
   const result = await response.json();
